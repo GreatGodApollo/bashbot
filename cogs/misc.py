@@ -33,7 +33,7 @@ class Misc:
         embed = discord.Embed(title="Bash — Bot", description="Information", color=0x4DA825)
         embed.add_field(name="Author", value="apollo#9292", inline=True)
         embed.add_field(name="Bot Version", value=version, inline=True)
-        embed.add_field(name="Python Version", value="3.6.7", inline=True)
+        embed.add_field(name="Python Version", value="3.6.6", inline=True)
         embed.add_field(name="Discord.py Version", value="0.16.12", inline=True)
         embed.add_field(name="Hex Color", value="#4DA825", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
