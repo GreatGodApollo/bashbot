@@ -3,7 +3,7 @@ import asyncio
 import discord
 from discord.ext import commands
 
-from permissions import modcheck
+from permissions import modcheck, guildonly
 
 
 class Hidden:
@@ -42,6 +42,7 @@ class Hidden:
             await self.bot.edit_message(msg, "This hidden message expired")
         await self.bot.clear_reactions(msg)
 
+    @commands.check(guildonly)
     @commands.check(modcheck)
     @hidden.command(pass_context=True, hidden=True)
     async def mute(self, ctx, emote, time: int, *, msg):

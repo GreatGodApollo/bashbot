@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from permissions import modcheck
+from permissions import modcheck, guildonly
 
 
 class Moderation:
@@ -10,6 +10,7 @@ class Moderation:
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.check(guildonly)
     @commands.check(modcheck)
     @commands.command(pass_context=True)
     async def unmute(self, ctx, user: discord.User):
@@ -18,6 +19,7 @@ class Moderation:
         await self.bot.remove_roles(user, role)
         await self.bot.say("User {0} unmuted.".format(user.mention))
 
+    @commands.check(guildonly)
     @commands.check(modcheck)
     @commands.command(pass_context=True)
     async def mute(self, ctx, user: discord.User):

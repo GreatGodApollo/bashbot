@@ -36,3 +36,11 @@ def modcheck(ctx):
     except Exception as e:
         print(e)
         return ownercheck(ctx)
+
+
+def guildonly(ctx):
+
+    if isinstance(ctx.message.channel, discord.PrivateChannel):
+        return False
+    else:
+        return True

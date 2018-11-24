@@ -48,6 +48,9 @@ async def on_command_error(event, ctx):
         if "ownercheck" in str(ctx.command.checks):
             await bot.send_message(ctx.message.channel, "You are not root")
             return
+        elif "guildonly" in str(ctx.command.checks):
+            await bot.send_message(ctx.message.channel, ":x: Sorry, this command can only be used in servers :x:")
+            return
         await bot.send_message(ctx.message.channel, ":no_entry: Access to this command is restricted.")
         return
     if isinstance(event, commands.MissingRequiredArgument):

@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from permissions import admincheck
+from permissions import admincheck, guildonly
 
 
 class Administration:
@@ -10,6 +10,7 @@ class Administration:
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.check(guildonly)
     @commands.group(pass_context=True)
     async def admin(self, ctx):
         """This is a command to check if you have admin privileges"""
@@ -22,6 +23,7 @@ class Administration:
         elif not admincheck(ctx):
             await bot.say("You are not an admin")
 
+    @commands.check(guildonly)
     @commands.check(admincheck)
     @admin.command(pass_context=True)
     async def setupmute(self, ctx):
@@ -40,6 +42,7 @@ class Administration:
         else:
             await self.bot.say("A Muted role already exists, please run `admin setupmutechannels` in order to just setup the channel overrides")
 
+    @commands.check(guildonly)
     @commands.check(admincheck)
     @admin.command(pass_context=True)
     async def setupmutechannels(self, ctx):

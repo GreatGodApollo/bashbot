@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 from bot import session
-from permissions import admincheck
+from permissions import admincheck, guildonly
 from utils.db_declarative import ServerConfig
 
 
@@ -30,6 +30,7 @@ class Config:
         else:
             pass
 
+    @commands.check(guildonly)
     @commands.check(admincheck)
     @config.command(pass_context=True)
     async def set(self, ctx, option: str, *, value: str):
@@ -46,6 +47,7 @@ class Config:
         session.commit()
         await self.bot.say("Configuration Updated")
 
+    @commands.check(guildonly)
     @commands.check(admincheck)
     @config.command(pass_context=True)
     async def get(self, ctx, option: str):
@@ -59,6 +61,7 @@ class Config:
         else:
             await self.bot.say("Invalid option `{}`".format(option))
 
+    @commands.check(guildonly)
     @commands.check(admincheck)
     @config.command(pass_context=True)
     async def list(self, ctx):
