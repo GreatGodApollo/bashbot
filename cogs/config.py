@@ -21,6 +21,7 @@ class Config:
             for page in pages:
                 await self.bot.send_message(ctx.message.channel, page)
 
+    @commands.check(guildonly)
     @commands.check(admincheck)
     @commands.group(pass_context=True)
     async def config(self, ctx):

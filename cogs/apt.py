@@ -41,6 +41,7 @@ class Apt:
             await self.bot.say("We ran into an issue removing {}.".format(extension_name))
         await self.bot.edit_message(msg, "The package {} was successfully removed.".format(extension_name))
 
+    @commands.check(ownercheck)
     @apt.command()
     async def upgrade(self, extension_name: str):
         """Upgrades a package."""
