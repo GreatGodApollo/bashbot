@@ -1,16 +1,18 @@
-import time
-from discord.ext import commands
-import discord
+import asyncio
 import logging
-import traceback
 import sys
+import time
+import traceback
+from datetime import datetime
 
+import discord
+from discord.ext import commands
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from config import Config
-
-from utils.db_declarative import ServerConfig, Base
+from utils.db_declarative import ServerConfig, Base, ServerMutes
+from utils.mutes import *
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -19,7 +21,7 @@ startup_extensions = Config.cogs
 
 bot = commands.Bot(command_prefix=Config.prefixes, description=Config.description)
 start_time = time.time()
-version = "0.6.2"
+version = "0.7.1"
 
 dbengine = create_engine(Config.dburl,
                          pool_pre_ping=True)
@@ -27,9 +29,12 @@ dbengine = create_engine(Config.dburl,
 Base.metadata.bind = dbengine
 DBSession = sessionmaker(bind=dbengine)
 session = DBSession()
+start = 0
+
 
 @bot.event
 async def on_ready():
+    global start
     print("------------")
     print("Bash bot v{}".format(version))
     print("------------")
@@ -40,6 +45,20 @@ async def on_ready():
     print('READY')
     await bot.change_presence(game=discord.Game(name="for {}help | v{}".format(Config.prefixes[0], version), type=3),
                               status="dnd")
+    if start is 0:
+        start += 1
+        await startmutechecks()
+
+
+async def startmutechecks():
+    while True:
+        currentMutes = session.query(ServerMutes)
+        if currentMutes is not None:
+            for mutee in currentMutes:
+                if datetime.utcnow() >= mutee.timeToUnmute:
+                    await un_mute(bot, mutee.serverId, mutee.userId)
+
+        await asyncio.sleep(2)
 
 
 @bot.event

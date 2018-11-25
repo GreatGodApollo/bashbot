@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 
 from permissions import modcheck, guildonly
+from utils.mutes import *
 
 
 class Moderation:
@@ -13,21 +14,29 @@ class Moderation:
     @commands.check(guildonly)
     @commands.check(modcheck)
     @commands.command(pass_context=True)
-    async def unmute(self, ctx, user: discord.User):
+    async def unmute(self, ctx,  user: discord.User):
         """The simple yet majestic unmute command"""
-        role = discord.utils.get(ctx.message.server.roles, name='Muted')
-        await self.bot.remove_roles(user, role)
-        await self.bot.say("User {0} unmuted.".format(user.mention))
+        res = await un_mute(self.bot, ctx.message.server.id, user.id)
+        if res is True:
+            await self.bot.say("User {0} unmuted.".format(user.mention))
+        else:
+            await self.bot.say("User {0) isn't currently muted".format(user.mention))
 
     @commands.check(guildonly)
     @commands.check(modcheck)
     @commands.command(pass_context=True)
-    async def mute(self, ctx, user: discord.User):
+    async def mute(self, ctx, user: discord.User, seconds: int=31557600):
         """The simple yet majestic mute command"""
-        role = discord.utils.get(ctx.message.server.roles, name='Muted')
-        await self.bot.add_roles(user, role)
-        await self.bot.say("User {0} muted.".format(user.mention))
+        try:
+            res = await mute(self.bot, ctx.message.server.id, user.id, seconds)
+            if res is True:
+                await self.bot.say(f"User {user.mention} muted for {seconds} seconds.")
+            else:
+                await self.bot.say(f"User {user.mention} already has a mute!")
+        except:
+            await self.bot.say("I'm missing permissions!")
 
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
+

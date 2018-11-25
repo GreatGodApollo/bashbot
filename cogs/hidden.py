@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 
 from permissions import modcheck, guildonly
+from utils.mutes import *
 
 
 class Hidden:
@@ -68,27 +69,23 @@ class Hidden:
         if res is not None:
             role = discord.utils.get(ctx.message.server.roles, name='Muted')
             if role is not None:
-                try:
-                    await self.bot.add_roles(res.user, role)
+                res = await mute(self.bot, ctx.message.server.roles, res.user.id)
+                if res:
                     await self.bot.edit_message(mesg, "User {0} muted for {1} seconds.".format(res.user.mention, time))
-                except:
+                else:
                     self.bot.say("I'm missing permissions!")
             else:
-                try:
-                    permsoverwrite = discord.PermissionOverwrite()
-                    permsoverwrite.send_messages = False
-                    perms = discord.Permissions(send_messages=False, read_messages=True)
-                    role = await self.bot.create_role(ctx.message.server, name="Muted", permissions=perms)
-                    for channel in ctx.message.server.channels:
-                        await self.bot.edit_channel_permissions(channel, role, permsoverwrite)
-                    await self.bot.add_roles(res.user, role)
+                permsoverwrite = discord.PermissionOverwrite()
+                permsoverwrite.send_messages = False
+                perms = discord.Permissions(send_messages=False, read_messages=True)
+                role = await self.bot.create_role(ctx.message.server, name="Muted", permissions=perms)
+                for channel in ctx.message.server.channels:
+                    await self.bot.edit_channel_permissions(channel, role, permsoverwrite)
+                res = await mute(self.bot, ctx.message.server.roles, res.user.id)
+                if res:
                     await self.bot.edit_message(mesg, "User {0} muted for {1} seconds.".format(res.user.mention, time))
-                except:
+                else:
                     self.bot.say("I'm missing permissions!")
-            await self.bot.clear_reactions(mesg)
-            await asyncio.sleep(time)
-            await self.bot.remove_roles(res.user, role)
-            await self.bot.edit_message(mesg, "User " + res.user.mention + " unmuted.")
         await asyncio.sleep(1)
         await self.bot.delete_message(mesg)
 
