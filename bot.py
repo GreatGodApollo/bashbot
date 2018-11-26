@@ -22,7 +22,7 @@ startup_extensions = Config.cogs
 
 bot = commands.Bot(command_prefix=Config.prefixes, description=Config.description)
 start_time = time.time()
-version = "0.7.1"
+version = "0.8"
 
 dbengine = create_engine(Config.dburl,
                          pool_pre_ping=True)
