@@ -46,12 +46,8 @@ class Hidden:
     @commands.check(guildonly)
     @commands.check(modcheck)
     @hidden.command(pass_context=True, hidden=True)
-    async def mute(self, ctx, emote, time: int, *, msg):
+    async def mute(self, ctx, emote, *, msg):
         """Creates a message that mutes people on reaction"""
-        try:
-            time = int(time)
-        except:
-            time = 5
         await self.bot.delete_message(ctx.message)
         mesg = await self.bot.send_message(ctx.message.channel, msg)
         try:
@@ -71,7 +67,7 @@ class Hidden:
             if role is not None:
                 res = await mute(self.bot, ctx.message.server.roles, res.user.id)
                 if res:
-                    await self.bot.edit_message(mesg, "User {0} muted for {1} seconds.".format(res.user.mention, time))
+                    await self.bot.edit_message(mesg, "User {0} muted.".format(res.user.mention))
                 else:
                     self.bot.say("I'm missing permissions!")
             else:
@@ -83,7 +79,7 @@ class Hidden:
                     await self.bot.edit_channel_permissions(channel, role, permsoverwrite)
                 res = await mute(self.bot, ctx.message.server.roles, res.user.id)
                 if res:
-                    await self.bot.edit_message(mesg, "User {0} muted for {1} seconds.".format(res.user.mention, time))
+                    await self.bot.edit_message(mesg, "User {0} muted.".format(res.user.mention))
                 else:
                     self.bot.say("I'm missing permissions!")
         await asyncio.sleep(1)

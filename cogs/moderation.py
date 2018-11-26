@@ -20,17 +20,17 @@ class Moderation:
         if res is True:
             await self.bot.say("User {0} unmuted.".format(user.mention))
         else:
-            await self.bot.say("User {0) isn't currently muted".format(user.mention))
+            await self.bot.say("User {0} isn't currently muted".format(user.mention))
 
     @commands.check(guildonly)
     @commands.check(modcheck)
     @commands.command(pass_context=True)
-    async def mute(self, ctx, user: discord.User, seconds: int=31557600):
+    async def mute(self, ctx, user: discord.User):
         """The simple yet majestic mute command"""
         try:
-            res = await mute(self.bot, ctx.message.server.id, user.id, seconds)
+            res = await mute(self.bot, ctx.message.server.id, user.id)
             if res is True:
-                await self.bot.say(f"User {user.mention} muted for {seconds} seconds.")
+                await self.bot.say(f"User {user.mention} muted for {minutes} minute(s).")
             else:
                 await self.bot.say(f"User {user.mention} already has a mute!")
         except:

@@ -3,6 +3,7 @@ import logging
 import sys
 import time
 import traceback
+import sched
 from datetime import datetime
 
 import discord
@@ -30,11 +31,30 @@ Base.metadata.bind = dbengine
 DBSession = sessionmaker(bind=dbengine)
 session = DBSession()
 start = 0
+starttime = None
+
+async def startmutechecks():
+    while True:
+        try:
+            currentMutes = session.query(ServerMutes)
+        except:
+            currentMutes = None
+            print("I couldn't connect to the DB!")
+        if currentMutes is not None:
+            for mutee in currentMutes:
+                if datetime.utcnow() > mutee.timeToUnmute:
+                    await un_mute(bot, mutee.serverId, mutee.userId)
+                else:
+                    pass
+
+        await asyncio.sleep(15.00 - ((time.time() - start_time) % 15.00))
+
 
 
 @bot.event
 async def on_ready():
     global start
+    global starttime
     print("------------")
     print("Bash bot v{}".format(version))
     print("------------")
@@ -45,20 +65,10 @@ async def on_ready():
     print('READY')
     await bot.change_presence(game=discord.Game(name="for {}help | v{}".format(Config.prefixes[0], version), type=3),
                               status="dnd")
-    if start is 0:
-        start += 1
-        await startmutechecks()
-
-
-async def startmutechecks():
-    while True:
-        currentMutes = session.query(ServerMutes)
-        if currentMutes is not None:
-            for mutee in currentMutes:
-                if datetime.utcnow() >= mutee.timeToUnmute:
-                    await un_mute(bot, mutee.serverId, mutee.userId)
-
-        await asyncio.sleep(2)
+    #if start is 0:
+    #    start += 1
+    #    starttime = time.time()
+    #    await startmutechecks()
 
 
 @bot.event

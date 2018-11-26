@@ -20,7 +20,6 @@ class ServerMutes(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     serverId = Column(String(18), nullable=False)
     userId = Column(String(18), nullable=False)
-    timeToUnmute = Column(DateTime(), nullable=False)
 
 
 engine = create_engine('mysql+pymysql://apollo_bash:ThisAmazing@cpanel.theendlessweb.com/apollo_bashbot',
