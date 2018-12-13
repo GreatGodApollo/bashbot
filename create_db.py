@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
+from config import Config
 
 Base = declarative_base()
 
@@ -21,8 +22,7 @@ class ServerMutes(Base):
     serverId = Column(String(18), nullable=False)
     userId = Column(String(18), nullable=False)
 
-
-engine = create_engine('mysql+pymysql://apollo_bash:ThisAmazing@cpanel.theendlessweb.com/apollo_bashbot',
-                       pool_pre_ping=True)
+dbengine = create_engine(Config.dburl,
+                         pool_pre_ping=True)
 
 Base.metadata.create_all(engine)
