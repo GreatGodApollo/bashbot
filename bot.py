@@ -43,8 +43,8 @@ async def on_ready():
     print(bot.user.id)
     print("Invite me using https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8".format(bot.user.id))
     print('READY')
-    await bot.change_presence(activity=discord.Game(name="for {}help | v{}".format(Config.prefixes[0], version), type=3),
-                              status=discord.Status.dnd)
+    await bot.change_presence(game=discord.Game(name="for {}help | v{}".format(Config.prefixes[0], version), type=3),
+                              status="dnd")
 
 
 @bot.event
