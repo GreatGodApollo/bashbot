@@ -6,7 +6,7 @@ from utils.mutes import *
 
 
 class Moderation:
-    """My custom cog that does stuff!"""
+    """Moderation Commands"""
 
     def __init__(self, bot):
         self.bot = bot

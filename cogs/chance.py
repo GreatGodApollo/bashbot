@@ -5,7 +5,7 @@ from permissions import admincheck
 
 
 class Chance:
-    """My custom cog that does stuff!"""
+    """Chance Commands"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -20,3 +20,4 @@ class Chance:
 
 def setup(bot):
     bot.add_cog(Chance(bot))
+
