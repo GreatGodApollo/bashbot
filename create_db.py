@@ -22,7 +22,8 @@ class ServerMutes(Base):
     serverId = Column(String(18), nullable=False)
     userId = Column(String(18), nullable=False)
 
+
 dbengine = create_engine(Config.dburl,
                          pool_pre_ping=True)
 
-Base.metadata.create_all(engine)
+Base.metadata.create_all(dbengine)
