@@ -6,3 +6,5 @@ class Config:
     cogs = ["cogs.owner", "cogs.apt", "cogs.misc", "cogs.administration", "cogs.moderation", "cogs.config",
             "cogs.hidden", "cogs.repl"]
     dburl = "DB Connection URL"
+    workingDirectory = "/your/working/directory/"
+    serviceName = "yourServiceName"
