@@ -6,11 +6,11 @@ import sh
 from config import Config
 from sh import git
 import time
-import os, sys
 
 # Declarations
 serviceName = Config.serviceName
 workingDirectory = Config.workingDirectory
+service = sh.sudo.service
 
 
 def CheckForUpdate(workingDir):
@@ -39,9 +39,10 @@ if __name__ == "__main__":
     print("****** Checking for Code Update ^^^^^^")
 
     if CheckForUpdate(workingDirectory):
-        sh.service(f"{serviceName} stop")
+        service(f"{serviceName}", "stop")
         print("Resetting local modifications...")
         resetCheck = git(f"--git-dir={workingDirectory}.git/", f"--work-tree={workingDirectory}", "reset", "--hard",
                          "origin/master")
         print(str(resetCheck))
-        sh.service(f"{serviceName} start")
+        service(f"{serviceName}", "start")
+
