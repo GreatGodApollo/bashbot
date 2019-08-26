@@ -36,7 +36,7 @@ def CheckForUpdate(workingDir):
 
 if __name__ == "__main__":
 
-    print("****** Checking for Code Update ^^^^^^")
+    print("****** Checking for Code Update ******")
 
     if CheckForUpdate(workingDirectory):
         service(f"{serviceName}", "stop")
