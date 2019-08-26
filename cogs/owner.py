@@ -25,7 +25,7 @@ class Owner:
     @commands.check(ownercheck)
     @owner.command(pass_context=True, hidden=True)
     async def testing(self, ctx):
-        self.bot.say("Just a generic testing command")
+        await self.bot.say("Just a generic testing command")
 
     @commands.check(ownercheck)
     @owner.command(pass_context=True, aliases=["eval"])
