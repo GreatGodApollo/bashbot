@@ -18,7 +18,7 @@ class Random:
     @commands.command(pass_context=True)
     async def choose(self, ctx, *choices):
         """Get a random choice"""
-        choice = choices[random.randint(1, len(choices))]
+        choice = choices[random.randint(0, len(choices) - 1)]
         await self.bot.say(f"I choose\n> {choice}")
 
 def setup(bot):
