@@ -51,12 +51,12 @@ async def on_ready():
 async def on_command_error(event, ctx):
     if isinstance(event, commands.CheckFailure):
         if "ownercheck" in str(ctx.command.checks):
-            await bot.send_message(ctx.message.channel, "You are not root")
+            await self.bot.send_message(ctx.message.channel, "You are not root")
             return
         elif "guildonly" in str(ctx.command.checks):
-            await bot.send_message(ctx.message.channel, ":x: Sorry, this command can only be used in servers :x:")
+            await self.bot.send_message(ctx.message.channel, ":x: Sorry, this command can only be used in servers :x:")
             return
-        await bot.send_message(ctx.message.channel, ":no_entry: Access to this command is restricted.")
+        await self.bot.send_message(ctx.message.channel, ":no_entry: Access to this command is restricted.")
         return
     if isinstance(event, commands.MissingRequiredArgument):
         await send_cmd_help(ctx)
@@ -77,6 +77,7 @@ async def on_server_join(server):
     session.add(new_server)
     session.commit()
 
+
 @bot.event
 async def on_server_remove(server):
     session.query(ServerConfig).filter(ServerConfig.serverId == server.id).delete()
@@ -87,11 +88,11 @@ async def send_cmd_help(ctx):
     if ctx.invoked_subcommand:
         pages = bot.formatter.format_help_for(ctx, ctx.invoked_subcommand)
         for page in pages:
-            await bot.send_message(ctx.message.channel, page)
+            await self.bot.send_message(ctx.message.channel, page)
     else:
         pages = bot.formatter.format_help_for(ctx, ctx.command)
         for page in pages:
-            await bot.send_message(ctx.message.channel, page)
+            await self.bot.send_message(ctx.message.channel, page)
 
 if __name__ == "__main__":
     for extension in startup_extensions:

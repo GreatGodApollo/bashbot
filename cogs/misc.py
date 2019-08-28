@@ -2,6 +2,8 @@ import datetime
 import time
 import discord
 from discord.ext import commands
+import platform
+import pkg_resources
 
 from bot import start_time, version
 
@@ -33,8 +35,8 @@ class Misc:
         embed = discord.Embed(title="Bash — Bot", description="Information", color=0x4DA825)
         embed.add_field(name="Author", value="apollo#9292", inline=True)
         embed.add_field(name="Bot Version", value=version, inline=True)
-        embed.add_field(name="Python Version", value="3.6.6", inline=True)
-        embed.add_field(name="Discord.py Version", value="0.16.12", inline=True)
+        embed.add_field(name="Python Version", value=f"{platform.python_version()}", inline=True)
+        embed.add_field(name="Discord.py Version", value=f"{pkg_resources.get_distribution('discord.py').version}", inline=True)
         embed.add_field(name="Hex Color", value="#4DA825", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
         embed.add_field(name="Server Count", value=f"{len(self.bot.servers)} servers", inline=True)
