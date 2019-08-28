@@ -45,6 +45,7 @@ class Misc:
 
     @commands.command()
     async def invite(self):
+        """Get an invitation link!"""
         await self.bot.say(f"Invite me using https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8")
 
 
