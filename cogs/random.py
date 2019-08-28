@@ -17,8 +17,11 @@ class Random:
     @commands.command(pass_context=True)
     async def choose(self, ctx, *choices):
         """Get a random choice"""
-        choice = choices[random.randint(0, len(choices) - 1)]
-        await self.bot.say(f"I choose\n> {choice}")
+        if len(choices) >= 2:
+            choice = choices[random.randint(0, len(choices) - 1)]
+            await self.bot.say(f"I choose\n> {choice}")
+        else:
+            await self.bot.say(":x: At least 2 options must be provided :x:")
 
 
 def setup(bot):
