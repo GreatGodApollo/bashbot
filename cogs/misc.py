@@ -43,6 +43,10 @@ class Misc:
         embed.add_field(name="User Count", value=f"{len(set(self.bot.get_all_members()))} users", inline=True)
         await self.bot.say(embed=embed)
 
+    @commands.command()
+    async def invite(self):
+        await self.bot.say(f"Invite me using https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8")
+
 
 def setup(bot):
     bot.add_cog(Misc(bot))
