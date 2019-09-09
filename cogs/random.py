@@ -12,7 +12,12 @@ class Random:
     @commands.command(pass_context=True)
     async def roll(self, ctx, sides: int = 6):
         """Roll a die"""
-        await self.bot.say(f"You rolled a {sides} sided die.\n> {random.randint(1, sides)}")
+        if sides >= 2:
+            await self.bot.say(f"You rolled a {sides} sided die.\n> {random.randint(1, sides)}")
+        elif sides = 1:
+            await self.bot.say("Why would you want to roll a 1 sided die?")
+        else:
+            await self.bot.say(f"A number of sides greater than 2 must be specified. You sent:\n>{sides}")
 
     @commands.command(pass_context=True)
     async def choose(self, ctx, *choices):
