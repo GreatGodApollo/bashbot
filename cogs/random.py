@@ -14,7 +14,7 @@ class Random:
         """Roll a die"""
         if sides >= 2:
             await self.bot.say(f"You rolled a {sides} sided die.\n> {random.randint(1, sides)}")
-        elif sides = 1:
+        elif sides == 1:
             await self.bot.say("Why would you want to roll a 1 sided die?")
         else:
             await self.bot.say(f"A number of sides greater than 2 must be specified. You sent:\n>{sides}")
