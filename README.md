@@ -22,4 +22,4 @@ Bashbot is an interesting bot made in Python that has similar command syntax to 
 I recommend running the auto updater on a cron job, I run mine every 5 minutes. The auto updating script just runs
 the commands to download the latest updates from git, as well as restarting the bot using systemctl.
 
-**Note: The Auto-Updater will likely need modifications to work in your environment, if any such modifications are made, support will not be provided.
+**Note: The Auto-Updater will likely need modifications to work in your environment, if any such modifications are made, support will not be provided.**
